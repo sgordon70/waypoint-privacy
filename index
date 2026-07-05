@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waypoint — Panic Never Wins</title>
+<meta name="description" content="Waypoint proves you survive panic attacks. Every attack you get through becomes evidence — a growing, undeniable case against fear.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0D1117;
+    --abyss: #080C12;
+    --surface: #111827;
+    --surface-raised: #1E2A3A;
+    --border: #2D3E52;
+    --compass: #64B5F6;
+    --survive: #3D7A5E;
+    --survive-bright: #6FBF95;
+    --warm-white: #F0EDE6;
+    --muted: #8A9BB0;
+    --ghost: #4A5568;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--warm-white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display {
+    font-family: "Fraunces", Georgia, serif;
+  }
+
+  a { color: var(--compass); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--compass);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(45,62,82,0.5);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.2px;
+  }
+  .brand svg { display: block; }
+  nav a.nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  nav a.nav-link:hover { color: var(--warm-white); }
+
+  /* Hero */
+  header.hero {
+    position: relative;
+    padding: 96px 24px 88px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .breathing-orb {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 8px;
+  }
+  .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(100,181,246,0.35);
+  }
+  .ring.r1 { animation: breathe 7s ease-in-out infinite; }
+  .ring.r2 { inset: 30px; border-color: rgba(100,181,246,0.5); animation: breathe 7s ease-in-out infinite 0.15s; }
+  .ring.r3 {
+    inset: 60px;
+    background: radial-gradient(circle at 40% 35%, rgba(100,181,246,0.55), rgba(100,181,246,0.12) 70%);
+    border: none;
+    animation: breathe 7s ease-in-out infinite 0.3s;
+  }
+  .star {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .star svg { width: 46px; height: 46px; opacity: 0.95; }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.86); opacity: 0.75; }
+    50% { transform: scale(1.06); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring { animation: none !important; transform: scale(1); }
+  }
+
+  .eyebrow {
+    color: var(--survive-bright);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  h1.headline {
+    font-size: clamp(36px, 6vw, 58px);
+    font-weight: 300;
+    line-height: 1.08;
+    margin: 0 0 22px;
+    color: var(--warm-white);
+  }
+  h1.headline strong {
+    font-weight: 600;
+    color: var(--warm-white);
+  }
+
+  .sub {
+    max-width: 560px;
+    margin: 0 auto 40px;
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--warm-white);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--survive-bright);
+    box-shadow: 0 0 0 4px rgba(111,191,149,0.15);
+  }
+  .badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: var(--compass);
+    color: var(--night);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: filter 0.15s ease;
+  }
+  .badge-live:hover { filter: brightness(1.08); }
+  .badge-live svg { flex-shrink: 0; }
+  /* Sections */
+  section { padding: 88px 24px; }
+  section.alt { background: var(--surface); }
+
+  .section-head {
+    max-width: 620px;
+    margin: 0 auto 56px;
+    text-align: center;
+  }
+  .section-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 38px);
+    margin: 0 0 16px;
+  }
+  .section-head p {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  /* Evidence card mock */
+  .evidence-demo {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+  .evidence-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+  }
+  .evidence-number {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--survive-bright);
+    line-height: 1;
+  }
+  .evidence-label {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .evidence-quote {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--warm-white);
+  }
+
+  /* Protocol steps */
+  .steps {
+    max-width: 720px;
+    margin: 0 auto;
+    counter-reset: step;
+  }
+  .step {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--compass);
+    color: var(--compass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 16px;
+  }
+  .step-body h3 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .step-body p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* Crisis strip — quiet, single line, not a full section */
+  .crisis-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .crisis-strip-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+    flex-wrap: wrap;
+  }
+  .crisis-dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--compass);
+    box-shadow: 0 0 0 3px rgba(100,181,246,0.15);
+  }
+  .crisis-strip p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .crisis-strip strong {
+    color: var(--warm-white);
+    font-weight: 600;
+  }
+
+  /* Footer */
+  footer {
+    padding: 48px 24px 64px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .footer-links a:hover { color: var(--warm-white); }
+  .disclaimer {
+    max-width: 1040px;
+    margin: 32px auto 0;
+    font-size: 13px;
+    color: var(--ghost);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    header.hero { padding: 64px 20px 56px; }
+    section { padding: 64px 20px; }
+    .breathing-orb { width: 200px; height: 200px; }
+    .ring.r2 { inset: 22px; }
+    .ring.r3 { inset: 46px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="36" stroke="#64B5F6" stroke-width="2.8"/>
+        <path d="M 50.00,20.00 L 54.40,39.38 L 71.21,28.79 L 60.62,45.60 L 80.00,50.00 L 60.62,54.40 L 71.21,71.21 L 54.40,60.62 L 50.00,80.00 L 45.60,60.62 L 28.79,71.21 L 39.38,54.40 L 20.00,50.00 L 39.38,45.60 L 28.79,28.79 L 45.60,39.38 Z" fill="#64B5F6"/>
+      </svg>
+      Waypoint
+    </div>
+    <a class="nav-link" href="/privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="breathing-orb" aria-hidden="true">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="star">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M 50.00,20.00 L 54.40,39.38 L 71.21,28.79 L 60.62,45.60 L 80.00,50.00 L 60.62,54.40 L 71.21,71.21 L 54.40,60.62 L 50.00,80.00 L 45.60,60.62 L 28.79,71.21 L 39.38,54.40 L 20.00,50.00 L 39.38,45.60 L 28.79,28.79 L 45.60,39.38 Z" fill="#F0EDE6"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="eyebrow">Panic never wins</div>
+  <h1 class="headline">Every other app<br><strong>manages</strong> panic.<br>Waypoint <strong>proves</strong> you survive it.</h1>
+  <p class="sub">A calm, guided protocol for the moment panic hits — and a growing record of every time you got through it. Not therapy. Not a diagnosis. Just evidence.</p>
+
+  <div class="cta-row">
+    <a class="badge-live" href="https://apps.apple.com/us/app/waypoint-panic-never-wins/id6782197774" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zm3.415-3.132c.837-1.012 1.4-2.42 1.245-3.818-1.207.052-2.662.805-3.532 1.817-.78.887-1.454 2.32-1.273 3.686 1.336.104 2.723-.675 3.56-1.685z"/></svg>
+      Download on the App Store
+    </a>
+    <span class="badge"><span class="dot"></span>Coming soon to Google Play</span>
+  </div>
+</header>
+
+<section class="alt">
+  <div class="section-head">
+    <h2 class="display">Your evidence builds.</h2>
+    <p>Every attack you survive gets logged. Not as a symptom. As proof. Over weeks and months, that record becomes a quiet, undeniable argument against the fear that says "this time will be different."</p>
+  </div>
+  <div class="evidence-demo">
+    <div class="evidence-card">
+      <div class="evidence-number">14</div>
+      <div class="evidence-label">Attacks survived</div>
+      <div class="evidence-quote">"Every attack so far has ended."</div>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="section-head">
+    <h2 class="display">One button. That's it.</h2>
+    <p>When it hits, you don't have to think or decide anything. Waypoint walks you through it, one calm step at a time.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>You are safe</h3>
+        <p>A slow countdown gives your body a moment to land, with nothing to figure out.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>One slow breath</h3>
+        <p>A quick check-in on whether you can breathe with the app right now — no wrong answer.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Breathe together</h3>
+        <p>A guided breathing pattern, paced with gentle haptics, until your body starts to settle.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Ground yourself</h3>
+        <p>The 5-4-3-2-1 technique, one sense at a time, to bring you back into the room.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>The wave passes</h3>
+        <p>A moment to recognize what just happened — and that you stayed.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>It becomes evidence</h3>
+        <p>Logged, counted, and added to the growing case that you get through this.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="crisis-strip">
+  <div class="wrap crisis-strip-inner">
+    <span class="crisis-dot" aria-hidden="true"></span>
+    <p><strong>988 support is always free.</strong> Call, text, or chat with the Suicide &amp; Crisis Lifeline from anywhere in Waypoint — no matter how the app evolves, this feature stays free.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="brand" style="font-size: 15px;">
+      <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="36" stroke="#64B5F6" stroke-width="2.8"/>
+        <path d="M 50.00,20.00 L 54.40,39.38 L 71.21,28.79 L 60.62,45.60 L 80.00,50.00 L 60.62,54.40 L 71.21,71.21 L 54.40,60.62 L 50.00,80.00 L 45.60,60.62 L 28.79,71.21 L 39.38,54.40 L 20.00,50.00 L 39.38,45.60 L 28.79,28.79 L 45.60,39.38 Z" fill="#64B5F6"/>
+      </svg>
+      Waypoint
+    </div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="mailto:hello@waypoint.com">hello@waypoint.com</a>
+    </div>
+  </div>
+  <p class="disclaimer">Waypoint is a self-help tool and is not a substitute for professional medical or psychiatric care. If you are experiencing a mental health emergency, contact 988 (Suicide &amp; Crisis Lifeline) or your local emergency services.</p>
+</footer>
+
+</body>
+</html>
