@@ -1,6 +1,6 @@
 # Privacy Policy — Waypoint: Panic Never Wins
 
-Last updated: June 25, 2026
+Last updated: July 2026
 
 ## No Data Collection
 
