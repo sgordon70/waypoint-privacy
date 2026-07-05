@@ -22,4 +22,4 @@ Waypoint uses no third-party SDKs, advertising networks, or analytics tools.
 
 ## Contact
 
-Questions? Email: sgordon70@gmail.com
+Questions? Email: hello@waypoint.com
